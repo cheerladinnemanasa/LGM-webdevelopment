@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Registration Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+        }
+
+        .left-container {
+            width: 50%;
+            padding-right: 20px;
+        }
+
+        .right-container {
+            width: 50%;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        form {
+            width: 400px;
+            margin-bottom: 20px;
+        }
+
+        input[type="text"], input[type="email"], input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        input[type="radio"] {
+            margin-right: 5px;
+        }
+
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 100px;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        input[type="submit"], input[type="button"] {
+            width: 100px;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+        }
+
+        #displayData {
+            margin-top: 20px;
+        }
+
+        #enrolledStudents {
+            padding: 20px;
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>Registration Form</h1>
+    <div class="left-container">
+        <form id="registrationForm">
+            <input type="text" name="name" placeholder="Name" required>
+            <input type="email" name="email" placeholder="Email" required>
+            <input type="text" name="website" placeholder="Website">
+            <input type="text" name="imageLink" placeholder="Image Link">
+            <p>Gender:</p>
+            <input type="radio" name="gender" value="male" checked> Male
+            <input type="radio" name="gender" value="female"> Female
+            <input type="radio" name="gender" value="other"> Other
+            <p>Skills:</p>
+            <input type="checkbox" name="skills" value="java"> Java
+            <input type="checkbox" name="skills" value="html"> HTML
+            <input type="checkbox" name="skills" value="css"> CSS
+            <textarea name="comments" placeholder="Comments"></textarea>
+            <input type="submit" value="Enroll Student">
+            <input type="button" value="Clear" onclick="clearForm()">
+        </form>
+    </div>
+    <div class="right-container">
+        <h2>Enrolled Students:</h2>
+        <div id="enrolledStudents"></div>
+    </div>
+
+    <script>
+        function clearForm() {
+            document.getElementById("registrationForm").reset();
+        }
+
+        document.getElementById("registrationForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            var form = event.target;
+            var enrolledStudentsDiv = document.getElementById("enrolledStudents");
+
+            var name = form.elements["name"].value;
+            var email = form.elements["email"].value;
+            var website = form.elements["website"].value;
+            var imageLink = form.elements["imageLink"].value;
+            var gender = form.elements["gender"].value;
+            var skills = [];
+            var skillsInputs = form.elements["skills"];
+            for (var i = 0; i < skillsInputs.length; i++) {
+                if (skillsInputs[i].checked) {
+                    skills.push(skillsInputs[i].value);
+                }
+            }
+            var comments = form.elements["comments"].value;
+
+            var studentData = "<h3>Student Details:</h3>";
+            studentData += "<p><strong>Name:</strong> " + name + "</p>";
+            studentData += "<p><strong>Email:</strong> " + email + "</p>";
+            studentData += "<p><strong>Website:</strong> " + website + "</p>";
+            studentData += "<p><strong>Image:</strong><br><img src='" + imageLink + "' alt='Student Image'></p>";
+            studentData += "<p><strong>Gender:</strong> " + gender + "</p>";
+            studentData += "<p><strong>Skills:</strong> " + skills.join(", ") + "</p>";
+            studentData += "<p><strong>Comments:</strong> " + comments + "</p>";
+
+            enrolledStudentsDiv.innerHTML += studentData;
+            form.reset();
+        });
+    </script>
+</body>
+</html>
+
